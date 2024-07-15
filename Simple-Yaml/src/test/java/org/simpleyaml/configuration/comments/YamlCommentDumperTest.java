@@ -1,15 +1,13 @@
 package org.simpleyaml.configuration.comments;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Arrays;
-
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.simpleyaml.configuration.file.YamlConfiguration;
 import org.simpleyaml.utils.StringUtils;
+
+import java.io.IOException;
+import java.io.StringWriter;
 
 class YamlCommentDumperTest {
 
@@ -34,15 +32,20 @@ class YamlCommentDumperTest {
 
         dumper.dump();
 
-        MatcherAssert.assertThat(
-            "Comments are wrong!",
-            output.toString(),
-            new IsEqual<>("# test comment\n" +
+        String expected = "# test comment\n" +
                 "test: 'test' # test comment\n" +
                 "# test comment\n" +
                 "test-2: 'test-2' # test comment\n" +
                 "# test # comment\n" +
-                "test-3: 'test-3 #' # test # comment\n")
+                "test-3: 'test-3 #' # test # comment\n";
+
+        // Normalize line endings to '\n'
+        String actual = output.toString().replace("\r\n", "\n");
+
+        MatcherAssert.assertThat(
+                "Comments are wrong!",
+                actual,
+                new IsEqual<>(expected)
         );
     }
 
@@ -56,24 +59,24 @@ class YamlCommentDumperTest {
         final KeyTree.Node testNode = dumper.getNode("test");
 
         MatcherAssert.assertThat(
-            "The indention is not 0!",
-            testNode.getIndentation(),
-            new IsEqual<>(0)
+                "The indention is not 0!",
+                testNode.getIndentation(),
+                new IsEqual<>(0)
         );
         MatcherAssert.assertThat(
-            "The node name is not correct!",
-            testNode.getName(),
-            new IsEqual<>("test")
+                "The node name is not correct!",
+                testNode.getName(),
+                new IsEqual<>("test")
         );
         MatcherAssert.assertThat(
-            "The comment's node is wrong",
-            testNode.getComment(),
-            new IsEqual<>("# test comment")
+                "The comment's node is wrong",
+                testNode.getComment(),
+                new IsEqual<>("# test comment")
         );
         MatcherAssert.assertThat(
-            "The side comment's node is wrong",
-            testNode.getSideComment(),
-            new IsEqual<>(" # test comment")
+                "The side comment's node is wrong",
+                testNode.getSideComment(),
+                new IsEqual<>(" # test comment")
         );
     }
 
