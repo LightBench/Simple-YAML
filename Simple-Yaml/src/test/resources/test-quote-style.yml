@@ -1,5 +1,0 @@
-language: "EN"  # English(EN), French(FR)...
-string-list:
-  - "Hello"
-  - "World"
-boolean: true
