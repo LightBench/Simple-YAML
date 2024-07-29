@@ -4,7 +4,7 @@
 
     <groupId>me.carleslc</groupId>
     <artifactId>Simple-YAML</artifactId>
-    <version>1.8.4</version>
+    <version>2.0.0</version>
     <packaging>jar</packaging>
 
     <name>Simple-YAML</name>
